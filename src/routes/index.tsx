@@ -98,6 +98,35 @@ function Donut({ value, total }: { value: number; total: number }) {
   );
 }
 
+function TotalPanel({ title, Icon, color, value, total }: { title: string; Icon: typeof UserX; color: Tone; value: number; total: number }) {
+  const c = tone[color];
+  const pct = total ? Math.round((value / total) * 100) : 0;
+  return (
+    <section
+      className="relative flex flex-col overflow-hidden rounded-[1.2vw] border p-[1.6vw]"
+      style={{ background: `radial-gradient(circle at 85% 20%, color-mix(in oklab, ${c} 22%, transparent), var(--card) 65%)`, borderColor: `color-mix(in oklab, ${c} 40%, transparent)` }}
+    >
+      <Icon className="pointer-events-none absolute -bottom-[1.5vw] -right-[1.5vw] h-[13vw] w-[13vw] opacity-[0.08]" style={{ color: c }} />
+      <h2 className="flex items-center gap-[0.6vw] font-mono text-[1.35vw] font-bold uppercase tracking-wider">
+        <span className="flex h-[2.6vw] w-[2.6vw] items-center justify-center rounded-full" style={{ background: `color-mix(in oklab, ${c} 22%, transparent)`, color: c }}>
+          <Icon className="h-[1.5vw] w-[1.5vw]" />
+        </span>
+        {title}
+      </h2>
+      <div className="flex flex-1 items-center"><Big value={value} color={color} size="9vw" /></div>
+      <div className="relative">
+        <div className="mb-[0.5vw] flex items-baseline justify-between font-mono">
+          <span className="text-[1.1vw] uppercase tracking-wider text-muted-foreground">da frota</span>
+          <span className="text-[2vw] font-bold" style={{ color: c }}>{pct}%</span>
+        </div>
+        <div className="h-[0.6vw] overflow-hidden rounded-full bg-muted">
+          <div className="h-full rounded-full" style={{ width: `${pct}%`, background: c, boxShadow: `0 0 1vw ${c}` }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function useClock() {
   const [t, setT] = useState<string>("--:--:--");
   useEffect(() => {
@@ -155,12 +184,8 @@ function Index() {
             </div>
           </div>
         </Panel>
-        <Panel title="Sem motorista" icon={<UserX className={ic} />} color="red">
-          <div className="flex flex-1 items-center justify-center"><Big value={data.semMotorista} color="red" size="9vw" /></div>
-        </Panel>
-        <Panel title="Em manutenção" icon={<Wrench className={ic} />} color="orange">
-          <div className="flex flex-1 items-center justify-center"><Big value={data.manutencao} color="orange" size="9vw" /></div>
-        </Panel>
+        <TotalPanel title="Sem motorista" Icon={UserX} color="red" value={data.semMotorista} total={data.total} />
+        <TotalPanel title="Em manutenção" Icon={Wrench} color="orange" value={data.manutencao} total={data.total} />
       </div>
 
       <p className="text-right font-mono text-[0.9vw] text-muted-foreground">Atualizado em {data.atualizado}</p>
