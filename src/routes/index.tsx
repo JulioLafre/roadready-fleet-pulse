@@ -52,37 +52,28 @@ function Big({ value, color, size = "8vw" }: { value: number; color: Tone; size?
   );
 }
 
-function SubStat({ label, icon, value, total, color }: { label: string; icon: ReactNode; value: number; total: number; color: Tone }) {
-  const pct = total ? Math.round((value / total) * 100) : 0;
-  const c = tone[color];
+function Bar({ label, value, total, color }: { label: string; value: number; total: number; color: Tone }) {
+  const pct = total ? Math.max((value / total) * 100, value ? 2 : 0) : 0;
   return (
-    <div
-      className="flex flex-col gap-[0.6vw] rounded-[0.8vw] border p-[1vw]"
-      style={{ background: `color-mix(in oklab, ${c} 10%, transparent)`, borderColor: `color-mix(in oklab, ${c} 35%, transparent)` }}
-    >
-      <div className="flex items-center gap-[0.5vw] text-[1.1vw] font-medium" style={{ color: c }}>
-        <span className="flex h-[2vw] w-[2vw] items-center justify-center rounded-full" style={{ background: `color-mix(in oklab, ${c} 22%, transparent)` }}>{icon}</span>
-        <span className="text-foreground">{label}</span>
+    <div>
+      <div className="flex items-baseline justify-between">
+        <span className="text-[1.25vw] text-muted-foreground">{label}</span>
+        <span className="font-mono text-[2.6vw] font-bold leading-none" style={{ color: tone[color] }}>{value}</span>
       </div>
-      <div className="flex items-end justify-between">
-        <span className="glow font-mono text-[3.4vw] font-bold leading-none" style={{ color: c, ["--g" as string]: c }}>{value}</span>
-        <span className="font-mono text-[1.4vw] whitespace-nowrap text-muted-foreground">{pct}%</span>
-      </div>
-      <div className="h-[0.45vw] overflow-hidden rounded-full bg-muted">
-        <div className="h-full rounded-full" style={{ width: `${value ? Math.max(pct, 3) : 0}%`, background: c }} />
+      <div className="mt-[0.5vw] h-[0.7vw] overflow-hidden rounded-full bg-muted">
+        <div className="h-full rounded-full" style={{ width: `${pct}%`, background: tone[color] }} />
       </div>
     </div>
   );
 }
 
 function StatusWithBreakdown({ title, icon, color, d }: { title: string; icon: ReactNode; color: Tone; d: { total: number; semMotorista: number; manutencao: number } }) {
-  const si = "h-[1.1vw] w-[1.1vw]";
   return (
     <Panel title={title} icon={icon} color={color}>
       <div className="my-[1.2vw]"><Big value={d.total} color={color} /></div>
-      <div className="mt-auto grid grid-cols-2 gap-[0.9vw]">
-        <SubStat label="Sem motorista" icon={<UserX className={si} />} value={d.semMotorista} total={d.total} color="red" />
-        <SubStat label="Em manutenção" icon={<Wrench className={si} />} value={d.manutencao} total={d.total} color="orange" />
+      <div className="mt-auto space-y-[1.2vw] border-t border-border pt-[1.2vw]">
+        <Bar label="Sem motorista" value={d.semMotorista} total={d.total} color="red" />
+        <Bar label="Em manutenção" value={d.manutencao} total={d.total} color="orange" />
       </div>
     </Panel>
   );
