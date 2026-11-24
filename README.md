@@ -1,14 +1,33 @@
-# Welcome to your Lovable project
+# Roadready Fleet Pulse
+
+Seguindo o estilo de design, preciso que voce faca alguns ajustes nessa tela e pense numa boa forma de distribuir essas novas informacoes, nao precisa ser necessariamente no estilo dos cards atuais, pode usar outros estilos de graficos ate porque essas informacoes vao ser exibidas em telas full hd de 55 polegadas entao nao posso ter elas tao pequenas igual estao.
+
+o que vou mexer:
+tirar card desengatado
+
+sem motorista - exibir apenas o total
+
+fila carregamento - alem do total da fila apenas quantidade de sem motorista e em manutencao
+
+programado - alem do total programado apenas quantidade de sem motorista e em manutencao
+
+em viagem - alem do total em viagem apenas quantidade de sem motorista e em manutencao
+
+tirar card deslocamento vazio
+
+vazio -  alem do total deixar apenas o deslocando vazio
+
+mauntencao - somente o total de veiculos.
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/6d1108d4-2000-4c03-95c0-490f162f45ec).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +39,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
